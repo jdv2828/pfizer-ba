@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './infrastructure/auth.controller';
-import { LoginUserAction } from './application/loginUser.action';
+import { LoginController } from './infrastructure/login.controller';
+import { LoginAction } from './application/loginUser.action';
 import { AuthRepository } from './domain/repositories/auth.repository';
 import { KeyCloakRepository } from './infrastructure/repositories/keycloack.repository';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],
-  controllers: [AuthController],
+  controllers: [LoginController],
   providers: [
-    LoginUserAction,
+    LoginAction,
     {
       provide: AuthRepository,
       useClass: KeyCloakRepository,

@@ -3,7 +3,7 @@ import { Credentials } from './dto/auth.dto';
 import { AuthRepository } from '../domain/repositories/auth.repository';
 
 @Injectable()
-export class LoginUserAction {
+export class LoginAction {
   constructor(
     @Inject(AuthRepository) private readonly authRepository: AuthRepository,
   ) {}
