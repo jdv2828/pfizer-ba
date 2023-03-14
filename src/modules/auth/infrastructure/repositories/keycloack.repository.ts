@@ -25,9 +25,9 @@ export class KeyCloakRepository implements AuthRepository {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
           },
-        )
+        ),
       );
-      return data;
+      return { data };
     } catch (error) {
       if (error?.response?.status === 401) {
         throw new HttpException(
@@ -40,6 +40,5 @@ export class KeyCloakRepository implements AuthRepository {
       }
       throw error;
     }
-    
   }
 }
