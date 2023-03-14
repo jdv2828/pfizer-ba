@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Credentials } from './dto/auth.dto';
-import { AuthRepository } from '../domain/repositories/auth.repository';
+import { AuthRepository } from '../domain/repositories/Auth.repository';
 
 @Injectable()
 export class LoginAction {

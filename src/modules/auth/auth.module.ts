@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { LoginController } from './infrastructure/login.controller';
-import { LoginAction } from './application/loginUser.action';
-import { AuthRepository } from './domain/repositories/auth.repository';
-import { KeyCloakRepository } from './infrastructure/repositories/keycloack.repository';
+import { LoginController } from './infrastructure/Login.controller';
+import { LoginAction } from './application/LoginUser.action';
+import { AuthRepository } from './domain/repositories/Auth.repository';
+import { KeyCloakRepository } from './infrastructure/repositories/Keycloack.repository';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({

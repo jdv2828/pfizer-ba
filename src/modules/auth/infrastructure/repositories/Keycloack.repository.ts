@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Credentials } from '../../application/dto/auth.dto';
-import { AuthRepository } from '../../domain/repositories/auth.repository';
+import { AuthRepository } from '../../domain/repositories/Auth.repository';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';

@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { LoginAction } from '../application/loginUser.action';
+import { LoginAction } from '../application/LoginUser.action';
 import { Credentials } from '../application/dto/auth.dto';
 
 @Controller('auth')
