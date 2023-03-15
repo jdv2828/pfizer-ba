@@ -1,7 +1,7 @@
-import { Credentials } from '../../application/dto/auth.dto';
+import { CredentialsDto } from '../../application/dto/Credentials.dto';
 
 export interface AuthRepository {
-  auth(credentials: Credentials);
+  auth(credentials: CredentialsDto);
 }
 
 export const AuthRepository = Symbol('AuthRepository');

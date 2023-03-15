@@ -1,9 +1,12 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Headers } from '@nestjs/common';
+import { TokenDto } from '../apllication/dto/Credentials.dto';
+import { FetchUsersService } from '../apllication/FetchUsers.service';
 
 @Controller('users')
 export class FetchUsersController {
-    @Get()
-    public getAllUser() {
-
-    }
+  constructor(private readonly fetchUsersService: FetchUsersService) {}
+  @Get()
+  public handle(@Headers('authorization') token: TokenDto) {
+    return this.fetchUsersService.execute(token);
+  }
 }

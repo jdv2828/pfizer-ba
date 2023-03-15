@@ -1,14 +1,14 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { LoginAction } from '../application/LoginUser.action';
-import { Credentials } from '../application/dto/auth.dto';
+import { LoginService } from '../application/LoginUser.service';
+import { CredentialsDto } from '../application/dto/Credentials.dto';
 
 @Controller('auth')
 export class LoginController {
-  constructor(private loginUserAction: LoginAction) {}
+  constructor(private loginServer: LoginService) {}
 
   @Post('login')
   @HttpCode(200)
-  login(@Body() credentials: Credentials) {
-    return this.loginUserAction.handler(credentials);
+  handle(@Body() credentials: CredentialsDto) {
+    return this.loginServer.execute(credentials);
   }
 }

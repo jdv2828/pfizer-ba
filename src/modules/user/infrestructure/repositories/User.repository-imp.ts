@@ -1,33 +1,28 @@
+import { UserRepository } from '../../domain/repositories/User.repository';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Credentials } from '../../application/dto/auth.dto';
-import { AuthRepository } from '../../domain/repositories/Auth.repository';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
-import { CODES } from '../../../../common/codes.enum';
+import { CODES } from 'src/common/codes.enum';
+import { TokenDto } from '../../apllication/dto/Credentials.dto';
 
 @Injectable()
-export class KeyCloakRepository implements AuthRepository {
+export class UserRepositoryImp implements UserRepository {
   constructor(private readonly httpService: HttpService) {}
-  async auth(credentials: Credentials) {
+  async fetchAll(token: TokenDto) {
     try {
       const { data } = await firstValueFrom(
-        this.httpService.post(
-          `${settings.KEYCLOAK_URL}/realms/${settings.KEYCLOAK_REALM}/protocol/openid-connect/token`,
-          new URLSearchParams({
-            client_id: settings.KEYCLOAK_CLIENT_ID,
-            grant_type: settings.KEYCLOAK_GRANT_TYPE,
-            username: credentials.email,
-            password: credentials.password,
-          }),
+        this.httpService.get(
+          `${settings.KEYCLOAK_URL}/admin/realms/${settings.KEYCLOAK_REALM}/users`,
           {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
+              Authorization: `bearer ${token}`,
             },
           },
         ),
       );
-      return { data };
+      return data;
     } catch (error) {
       if (error?.response?.status === 401) {
         throw new HttpException(
