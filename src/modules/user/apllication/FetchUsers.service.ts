@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UserRepository } from '../domain/repositories/User.repository';
-import { TokenDto } from './dto/Credentials.dto';
+import { TokenDto } from './dto/Token.dto';
 
 @Injectable()
 export class FetchUsersService {

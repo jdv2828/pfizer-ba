@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CredentialsDto } from '../../application/dto/Credentials.dto';
-import { AuthRepository } from '../../domain/repositories/Auth.repository';
+import { CredentialsDto } from '@src/modules/auth/application/dto/Credentials.dto';
+import { AuthRepository } from '@src/modules/auth/domain/repositories/Auth.repository';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
-import { CODES } from '../../../../common/codes.enum';
+import { CODES } from '@src/common/codes.enum';
 
 @Injectable()
 export class KeyCloakRepositoryImp implements AuthRepository {

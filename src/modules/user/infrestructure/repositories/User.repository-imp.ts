@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
 import { CODES } from 'src/common/codes.enum';
-import { TokenDto } from '../../apllication/dto/Credentials.dto';
+import { TokenDto } from '../../apllication/dto/Token.dto';
 
 @Injectable()
 export class UserRepositoryImp implements UserRepository {

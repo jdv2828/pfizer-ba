@@ -1,5 +1,5 @@
 import { Controller, Get, Headers } from '@nestjs/common';
-import { TokenDto } from '../apllication/dto/Credentials.dto';
+import { TokenDto } from '../apllication/dto/Token.dto';
 import { FetchUsersService } from '../apllication/FetchUsers.service';
 
 @Controller('users')

@@ -1,4 +1,4 @@
-import { TokenDto } from '../../apllication/dto/Credentials.dto';
+import { TokenDto } from '../../apllication/dto/Token.dto';
 export interface UserRepository {
   fetchAll(tokenDto: TokenDto);
 }
