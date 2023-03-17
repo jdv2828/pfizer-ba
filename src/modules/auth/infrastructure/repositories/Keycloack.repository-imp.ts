@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Credentials } from '../../application/dto/auth.dto';
-import { AuthRepository } from '../../domain/repositories/auth.repository';
+import { CredentialsDto } from '@src/modules/auth/application/dto/Credentials.dto';
+import { AuthRepository } from '@src/modules/auth/domain/repositories/Auth.repository';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
-import { CODES } from '../../../../common/codes.enum';
+import { MESSAGES } from '@src/common/codes.enum';
 
 @Injectable()
-export class KeyCloakRepository implements AuthRepository {
+export class KeyCloakRepositoryImp implements AuthRepository {
   constructor(private readonly httpService: HttpService) {}
-  async auth(credentials: Credentials) {
+  async auth(credentials: CredentialsDto) {
     try {
       const { data } = await firstValueFrom(
         this.httpService.post(
@@ -32,7 +32,7 @@ export class KeyCloakRepository implements AuthRepository {
       if (error?.response?.status === 401) {
         throw new HttpException(
           {
-            message: CODES.ERROR_INVALID_CREDENTIALS,
+            message: MESSAGES.ERROR_INVALID_CREDENTIALS,
             code: HttpStatus.UNAUTHORIZED,
           },
           HttpStatus.UNAUTHORIZED,
