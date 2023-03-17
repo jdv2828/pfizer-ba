@@ -4,7 +4,7 @@ import { AuthRepository } from '@src/modules/auth/domain/repositories/Auth.repos
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
-import { CODES } from '@src/common/codes.enum';
+import { MESSAGES } from '@src/common/codes.enum';
 
 @Injectable()
 export class KeyCloakRepositoryImp implements AuthRepository {
@@ -32,7 +32,7 @@ export class KeyCloakRepositoryImp implements AuthRepository {
       if (error?.response?.status === 401) {
         throw new HttpException(
           {
-            message: CODES.ERROR_INVALID_CREDENTIALS,
+            message: MESSAGES.ERROR_INVALID_CREDENTIALS,
             code: HttpStatus.UNAUTHORIZED,
           },
           HttpStatus.UNAUTHORIZED,

@@ -3,7 +3,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { settings } from 'src/config/settings';
-import { CODES } from 'src/common/codes.enum';
+import { MESSAGES } from 'src/common/codes.enum';
 import { TokenDto } from '../../apllication/dto/Token.dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class UserRepositoryImp implements UserRepository {
           {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
-              Authorization: `bearer ${token}`,
+              Authorization: `${token}`,
             },
           },
         ),
@@ -27,7 +27,7 @@ export class UserRepositoryImp implements UserRepository {
       if (error?.response?.status === 401) {
         throw new HttpException(
           {
-            message: CODES.ERROR_INVALID_CREDENTIALS,
+            message: MESSAGES.ERROR_INVALID_CREDENTIALS,
             code: HttpStatus.UNAUTHORIZED,
           },
           HttpStatus.UNAUTHORIZED,
@@ -35,5 +35,24 @@ export class UserRepositoryImp implements UserRepository {
       }
       throw error;
     }
+  }
+  async fetchByEmail(email: string, token: TokenDto): Promise<boolean> {
+    const { data } = await firstValueFrom(
+      this.httpService.get(
+        `${settings.KEYCLOAK_URL}/admin/realms/${settings.KEYCLOAK_REALM}/users`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        },
+      ),
+    );
+    let found = false;
+    data.forEach((obj) => {
+      if (obj.email === email) {
+        found = true;
+      }
+    });
+    return found;
   }
 }

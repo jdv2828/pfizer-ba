@@ -1,5 +1,7 @@
-import EventManager from '../../../common/events/Event.manager';
-import UserCreated from './events/UserCreated';
+import EventManager from '@src/common/events/Event.manager';
+import UserWasCreated from '@src/modules/user/domain/events/UserWasCreated';
+import { CreateUserDto } from '../apllication/dto/User.dto';
+import { TokenDto } from '../apllication/dto/Token.dto';
 export class User {
   email: string;
   credentials: { type: string; value: string }[];
@@ -8,42 +10,22 @@ export class User {
   firstName: string;
   lastName: string;
 
-  constructor(
-    email: string,
-    credentials: { type: string; value: string }[],
-    enabled: boolean,
-    emailVerified: boolean,
-    firstName: string,
-    lastName: string,
-  ) {
-    this.email = email;
-    this.credentials = credentials;
-    this.enabled = enabled;
-    this.emailVerified = emailVerified;
-    this.firstName = firstName;
-    this.lastName = lastName;
+  constructor(dto: CreateUserDto) {
+    this.email = dto.email;
+    this.credentials = dto.credentials;
+    this.enabled = dto.enabled ?? true;
+    this.emailVerified = dto.emailVerified ?? true;
+    this.firstName = dto.firstName ?? '';
+    this.lastName = dto.lastName ?? '';
   }
 
-  public static register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-  ): User {
-    const credentials = [{ type: 'password', value: password }];
-    const user = User.make(email, password, firstName, lastName);
-    EventManager.dispatch(new UserCreated(user));
-    return new User(email, credentials, true, true, firstName, lastName);
-  }
-
-  public static make(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string,
-  ): User {
-    const credentials = [{ type: 'password', value: password }];
-    return new User(email, credentials, true, true, firstName, lastName);
+  public static async register(
+    dto: CreateUserDto,
+    token?: TokenDto,
+  ): Promise<User> {
+    const user = new User(dto);
+    EventManager.dispatch(new UserWasCreated(user, token));
+    return user;
   }
 
   public getFullName(): string {
